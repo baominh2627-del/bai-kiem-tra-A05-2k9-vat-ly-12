@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài 18 – Hôn Nhân Công Giáo</title>
+    <style>
+      :root {
+        --primary: #123b63;
+        --primary2: #071f3a;
+        --accent: #d4af37;
+        --bg: #eef3f8;
+        --text: #172033;
+        --muted: #667085;
+        --card: #fff;
+        --good: #15803d;
+        --bad: #dc2626;
+        --border: #e5e7eb;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
+        background: linear-gradient(135deg, #eef3f8, #f8fafc);
+        color: var(--text);
+      }
+      .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 28px 18px 50px;
+      }
+      header {
+        background:
+          linear-gradient(
+            135deg,
+            rgba(7, 31, 58, 0.96),
+            rgba(18, 59, 99, 0.93)
+          ),
+          url("https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=1800&q=85");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        border-radius: 24px;
+        padding: 28px 26px;
+        margin-bottom: 20px;
+        box-shadow: 0 14px 34px rgba(7, 31, 58, 0.25);
+        position: relative;
+        overflow: hidden;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(25px, 4vw, 38px);
+      }
+      .subtitle {
+        opacity: 0.92;
+        font-size: 16px;
+      }
+      .progress-wrap {
+        margin-top: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 99px;
+        height: 10px;
+        overflow: hidden;
+      }
+      #progress {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #ffffff, var(--accent));
+        transition: 0.3s;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      }
+      .topline {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      .question {
+        font-size: 21px;
+        line-height: 1.55;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .option {
+        display: block;
+        border: 2px solid var(--border);
+        border-radius: 14px;
+        padding: 15px 16px;
+        margin: 11px 0;
+        cursor: pointer;
+        transition: 0.18s;
+        background: white;
+      }
+      .option:hover {
+        border-color: #7c9bb8;
+        background: #f1f6fa;
+      }
+      .option input {
+        margin-right: 10px;
+        transform: scale(1.15);
+      }
+      .option.correct {
+        border-color: var(--good);
+        background: #f0fdf4;
+      }
+      .option.wrong {
+        border-color: var(--bad);
+        background: #fef2f2;
+      }
+      .feedback {
+        margin-top: 16px;
+        padding: 13px 15px;
+        border-radius: 12px;
+        font-weight: 700;
+        display: none;
+      }
+      .feedback.show {
+        display: block;
+      }
+      .feedback.good {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .feedback.bad {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      button {
+        border: 0;
+        border-radius: 12px;
+        padding: 13px 18px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        background: var(--primary);
+        color: white;
+        transition: 0.2s;
+      }
+      button:hover {
+        background: #071f3a;
+      }
+      button.secondary {
+        background: #e5e7eb;
+        color: #374151;
+      }
+      button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      /* Login Screen */
+      #login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      .login-box {
+        max-width: 400px;
+        width: 100%;
+      }
+      .login-box .card {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      }
+      .login-box h2 {
+        color: var(--primary);
+        margin: 0 0 24px;
+        text-align: center;
+        font-size: 28px;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--text);
+      }
+      .form-group input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 2px solid var(--border);
+        border-radius: 10px;
+        font-size: 16px;
+        font-family: inherit;
+      }
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: #f9fafb;
+      }
+      .login-box button {
+        width: 100%;
+        margin-top: 8px;
+      }
+      .warning {
+        color: var(--bad);
+        font-size: 14px;
+        margin-top: 8px;
+      }
+
+      /* Result Screen */
+      #result {
+        display: none;
+        text-align: center;
+      }
+      .score {
+        font-size: 56px;
+        font-weight: 900;
+        color: var(--primary);
+        margin: 8px 0;
+      }
+      .result-msg {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 20px 0;
+      }
+      .stat {
+        padding: 12px 18px;
+        border-radius: 12px;
+        background: #f9fafb;
+        border: 1px solid var(--border);
+      }
+      .student-info {
+        background: #f0fdf4;
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        font-size: 14px;
+        color: var(--good);
+      }
+      .review {
+        text-align: left;
+        margin-top: 24px;
+      }
+      .review-item {
+        padding: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .small {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .action-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+      .action-group button {
+        flex: 1;
+        min-width: 120px;
+      }
+
+      /* Status Message */
+      .status {
+        display: none;
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        font-weight: 600;
+      }
+      .status.show {
+        display: block;
+      }
+      .status.success {
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid var(--good);
+      }
+      .status.error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid var(--bad);
+      }
+      .status.loading {
+        background: #fef08a;
+        color: #854d0e;
+        border: 1px solid #eab308;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 14px 10px 35px;
+        }
+        header,
+        .card {
+          border-radius: 16px;
+          padding: 20px;
+        }
+        .question {
+          font-size: 18px;
+        }
+        .actions button {
+          flex: 1;
+        }
+        .action-group {
+          flex-direction: column;
+        }
+        .action-group button {
+          width: 100%;
+        }
+      }
+      header:after {
+        content: "✝  ♥  ⛪";
+        position: absolute;
+        right: 28px;
+        bottom: 18px;
+        font-size: 34px;
+        letter-spacing: 12px;
+        opacity: 0.16;
+      }
+      .option b {
+        color: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Login Screen -->
+    <div id="login" class="login">
+      <div class="login-box">
+        <div class="card">
+          <h2>📝 Quiz Bài 18</h2>
+          <form onsubmit="startQuiz(event)">
+            <div class="form-group">
+              <label for="studentName">Tên học sinh:</label>
+              <input
+                type="text"
+                id="studentName"
+                placeholder="VD: Nguyễn Văn A"
+                required
+              />
+              <div class="warning" id="nameWarning"></div>
+            </div>
+            <div class="form-group">
+              <label for="studentClass">Lớp:</label>
+              <input type="text" id="studentClass" placeholder="VD: 10A1" />
+            </div>
+            <button type="submit">Bắt đầu làm bài</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-container" style="display: none">
+      <div class="container">
+        <header>
+          <div
+            style="
+              font-size: 14px;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              opacity: 0.85;
+              font-weight: 800;
+              margin-bottom: 7px;
+            "
+          >
+            ✝ Đức Kitô • Hội Thánh • Gia Đình
+          </div>
+          <h1>💍 Quiz Giáo Lý Hôn Nhân</h1>
+          <div class="subtitle">
+            Bài 18: Hôn Nhân Công Giáo – Trung Tín &amp; Sự Phân Ly Vợ Chồng
+          </div>
+          <div style="margin-top: 14px; font-size: 14px; opacity: 0.9">
+            "Sự gì Thiên Chúa đã phối hợp, loài người không được phân ly."
+          </div>
+          <div class="progress-wrap"><div id="progress"></div></div>
+        </header>
+
+        <div id="quiz" class="card">
+          <div class="topline">
+            <span id="counter"></span>
+            <span id="scoreLive">Điểm: 0</span>
+          </div>
+          <div
+            id="student-display"
+            style="font-size: 13px; color: var(--muted); margin-bottom: 12px"
+          >
+            👤 <span id="displayName"></span>
+          </div>
+          <div id="question" class="question"></div>
+          <div id="options"></div>
+          <div id="feedback" class="feedback"></div>
+          <div class="actions">
+            <button id="prev" class="secondary" onclick="prevQuestion()">
+              ← Câu trước
+            </button>
+            <button id="next" onclick="nextQuestion()">Câu tiếp →</button>
+          </div>
+        </div>
+
+        <div id="result" class="card">
+          <div class="status" id="status"></div>
+          <div class="student-info">
+            👤 <strong id="resultName"></strong> |
+            <span id="resultClass"></span> | <span id="resultTime"></span>
+          </div>
+          <div class="small">KẾT QUẢ</div>
+          <div class="score" id="finalScore"></div>
+          <div class="result-msg" id="resultMsg"></div>
+          <div class="stats">
+            <div class="stat">Đúng: <b id="correctCount"></b></div>
+            <div class="stat">Sai: <b id="wrongCount"></b></div>
+            <div class="stat">Tỷ lệ: <b id="percent"></b></div>
+          </div>
+          <div class="action-group">
+            <button
+              id="exportBtn"
+              onclick="exportResult()"
+              style="background: #059669"
+            >
+              💾 Tải kết quả
+            </button>
+            <button onclick="restart()" class="secondary">🔄 Làm lại</button>
+          </div>
+          <div class="review" id="review"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ⚠️ THAY ĐỔI: Dán URL Google Apps Script của bạn ở đây
+      const GOOGLE_SCRIPT_URL = 'THAY_BẰNG_URL_CỦA_BẠN'; // Xem hướng dẫn dưới
+
+      const questions = [{"n": 1, "q": "Hôn nhân Công Giáo được xem là trọn vẹn khi hội đủ những điều kiện nào sau đây?", "options": [["A", "Đã thành sự, là bí tích và đã ăn ở với nhau."], ["B", "Đã tổ chức lễ cưới, có giấy chứng nhận kết hôn và có con."], ["C", "Đã đăng ký kết hôn dân sự, đã thành sự và sống chung."], ["D", "Đã cử hành nghi thức tại nhà thờ, có con và sống chung lâu năm."]], "answer": "A"}, {"n": 2, "q": "Theo giáo luật được trình bày trong bài, hôn nhân đã ký kết và hoàn hợp giữa hai người đã chịu phép Rửa tội có thể bị tháo gỡ trong trường hợp nào?", "options": [["A", "Khi hai vợ chồng không còn yêu thương nhau."], ["B", "Khi một bên muốn kết hôn với người khác."], ["C", "Khi gia đình gặp nhiều khó khăn về kinh tế."], ["D", "Không thể bị tháo gỡ bởi bất cứ quyền lực nhân loại nào, ngoại trừ cái chết."]], "answer": "D"}, {"n": 3, "q": "Tại sao Hội Thánh không có quyền cho phép ly dị đối với một hôn nhân đã trọn vẹn giữa hai người đã chịu phép Rửa tội?", "options": [["A", "Vì hôn nhân ấy đã có nhiều người chứng kiến."], ["B", "Vì hôn nhân ấy là dấu chỉ của giao ước và thuộc luật Thiên Chúa."], ["C", "Vì luật dân sự không cho phép người Công giáo ly dị."], ["D", "Vì hai vợ chồng đã có con cái với nhau."]], "answer": "B"}, {"n": 4, "q": "Theo bài học, thế nào là một hôn nhân không trọn vẹn?", "options": [["A", "Hôn nhân chưa có con sau nhiều năm chung sống."], ["B", "Hôn nhân thường xuyên xảy ra bất đồng giữa hai vợ chồng."], ["C", "Hôn nhân thiếu một trong ba yếu tố: thành sự, là bí tích và đã ăn ở với nhau."], ["D", "Hôn nhân chỉ được cử hành tại nhà thờ nhưng chưa đăng ký dân sự."]], "answer": "C"}, {"n": 5, "q": "Một đôi vợ chồng Công giáo đã cử hành hôn nhân thành sự nhưng chưa ăn ở với nhau. Theo bài học, trường hợp này được xếp vào loại nào?", "options": [["A", "Hôn nhân đã trọn vẹn và tuyệt đối không thể tháo gỡ."], ["B", "Hôn nhân không thành sự ngay từ đầu."], ["C", "Hôn nhân không trọn vẹn và có thể thuộc trường hợp Hội Thánh tháo gỡ."], ["D", "Hôn nhân dân sự nên không thuộc thẩm quyền của Hội Thánh."]], "answer": "C"}, {"n": 6, "q": "Một cuộc hôn nhân giữa hai người Công giáo đã thành sự nhưng chưa ăn ở với nhau. Theo giáo luật được trình bày trong bài, Hội Thánh có thể làm gì đối với cuộc hôn nhân này?", "options": [["A", "Có thể tháo gỡ vì đây là hôn nhân không trọn vẹn."], ["B", "Không thể tháo gỡ trong bất cứ hoàn cảnh nào."], ["C", "Chỉ có thể tháo gỡ khi hai người đã có con chung."], ["D", "Chỉ được tháo gỡ nếu chính quyền dân sự cho phép."]], "answer": "A"}, {"n": 7, "q": "Trường hợp nào sau đây được bài học trình bày như một trường hợp thuộc "đặc ân thánh Phaolô"?", "options": [["A", "Hai người Công giáo kết hôn thành sự nhưng thường xuyên bất hòa."], ["B", "Hai người chưa được rửa tội đã kết hôn, sau đó một người trở lại đạo và người kia không muốn chung sống."], ["C", "Hai người Công giáo đã kết hôn và một người muốn đi tu."], ["D", "Một người Công giáo kết hôn với người không Công giáo nhưng đã ăn ở với nhau."]], "answer": "B"}, {"n": 8, "q": "Trong trường hợp "đặc ân thánh Phaolô", cuộc hôn nhân giữa hai người chưa được rửa tội có thể được tháo gỡ khi nào theo bài học?", "options": [["A", "Ngay khi một người lãnh nhận phép Rửa tội."], ["B", "Khi hai người không còn yêu thương nhau."], ["C", "Khi người mới theo đạo lấy một người khác."], ["D", "Khi chính quyền dân sự công nhận việc ly dị."]], "answer": "C"}, {"n": 9, "q": "Ngoài những trường hợp hôn nhân không trọn vẹn, Hội Thánh còn có quyền giải tán những cuộc hôn nhân nào?", "options": [["A", "Những hôn nhân đã sống chung trên mười năm nhưng không hạnh phúc."], ["B", "Những hôn nhân vốn đã không thành sự ngay từ đầu vì mắc một hoặc nhiều ngăn trở."], ["C", "Những hôn nhân có nhiều con nhưng thường xuyên tranh cãi."], ["D", "Những hôn nhân mà một bên muốn tái hôn với người khác."]], "answer": "B"}, {"n": 10, "q": "Điểm chung của những trường hợp Hội Thánh có thể tháo gỡ dây hôn phối được trình bày trong bài là gì?", "options": [["A", "Đều là những hôn nhân đã thành sự và hoàn hợp."], ["B", "Đều là những hôn nhân không trọn vẹn hoặc không thành sự theo những điều kiện được giáo luật quy định."], ["C", "Đều là những hôn nhân có vấn đề về kinh tế và đời sống gia đình."], ["D", "Đều là những trường hợp đã được tòa án dân sự tuyên bố ly dị."]], "answer": "B"}, {"n": 11, "q": "Theo bài học, ly thân được hiểu là tình trạng nào của hai vợ chồng?", "options": [["A", "Hai người không còn là vợ chồng và được tự do kết hôn lại."], ["B", "Hai người không còn chung sống với nhau nhưng vẫn là vợ chồng."], ["C", "Hai người đã được Hội Thánh tuyên bố hôn nhân vô hiệu."], ["D", "Hai người đã ly dị theo luật đời nhưng vẫn giữ giấy chứng nhận hôn phối."]], "answer": "B"}, {"n": 12, "q": "Trong hoàn cảnh nào Hội Thánh có thể chấp nhận cho vợ chồng ly thân?", "options": [["A", "Khi một bên không còn thích đời sống gia đình."], ["B", "Khi hai người muốn tìm một người bạn đời mới."], ["C", "Khi có những lý do nghiêm trọng khiến không thể tiếp tục sống chung, chẳng hạn ngoại tình hoặc gây nguy hiểm trầm trọng."], ["D", "Khi hai người muốn dành nhiều thời gian hơn cho công việc riêng."]], "answer": "C"}, {"n": 13, "q": "Theo bài học, hành vi nào sau đây có thể là lý do nghiêm trọng để Hội Thánh chấp nhận cho vợ chồng ly thân?", "options": [["A", "Hai vợ chồng khác nhau về sở thích và đam mê."], ["B", "Một bên gây nguy hiểm trầm trọng về tinh thần hoặc thể xác cho bên kia hay cho con cái."], ["C", "Hai người không thống nhất quan điểm nuôi dạy con cái."], ["D", "Một bên thường xuyên bận công việc ngoài giờ."]], "answer": "B"}, {"n": 14, "q": "Khi được Giáo quyền chấp nhận cho ly thân, tình trạng hôn nhân của hai vợ chồng trước mặt Thiên Chúa được hiểu thế nào?", "options": [["A", "Hai người hoàn toàn không còn liên hệ với nhau."], ["B", "Hôn nhân đã được tháo gỡ và mỗi người có thể kết hôn lại."], ["C", "Hai người vẫn là vợ chồng trước mặt Thiên Chúa, dù không còn sống chung."], ["D", "Hai người chỉ còn là vợ chồng trên giấy tờ dân sự."]], "answer": "C"}, {"n": 15, "q": "Một đôi vợ chồng được phép ly thân vì đời sống chung gây nguy hiểm nghiêm trọng. Người chồng sau đó muốn kết hôn với người khác. Theo bài học, điều này có được phép không?", "options": [["A", "Có, vì hai người đã không còn sống chung."], ["B", "Có, nếu người vợ đồng ý bằng văn bản."], ["C", "Không, vì họ vẫn là vợ chồng và người phối ngẫu còn sống."], ["D", "Có, nếu cuộc hôn nhân mới được chính quyền dân sự công nhận."]], "answer": "C"}, {"n": 16, "q": "Theo bài học, giải pháp nào được xem là tốt nhất trong những hoàn cảnh khó khăn của đời sống vợ chồng, nếu vẫn có thể thực hiện được?", "options": [["A", "Ly dị để mỗi người bắt đầu cuộc sống mới."], ["B", "Tìm cách hòa giải với nhau và trung thành với dây liên kết hôn nhân."], ["C", "Cắt đứt hoàn toàn liên hệ để tránh xung đột."], ["D", "Mỗi người tìm một người bạn đời khác để được hạnh phúc hơn."]], "answer": "B"}, {"n": 17, "q": "Mục đích chính yếu của Hôn Nhân là gì?", "options": [["A", "Yêu thương, giúp đỡ nhau trong cuộc sống."], ["B", "Bổ túc cho nhau những điểm còn khuyết."], ["C", "Sinh sản và giáo dục con cái theo thánh ý Chúa."], ["D", "Cả A,B,C."]], "answer": "D"}, {"n": 18, "q": "Theo lời Đức Kitô, người bỏ vợ mình rồi lấy vợ khác được hiểu là phạm tội gì đối với người vợ trước?", "options": [["A", "Tội bất kính với cha mẹ."], ["B", "Tội bất công với xã hội."], ["C", "Tội ngoại tình đối với người vợ trước."], ["D", "Tội không giữ luật dân sự."]], "answer": "C"}, {"n": 19, "q": "Nếu một người Công giáo đã ly dị theo luật đời nhưng cuộc hôn nhân đầu tiên vẫn thành sự, Hội Thánh nhìn nhận cuộc hôn nhân mới như thế nào?", "options": [["A", "Công nhận là hôn nhân bí tích nếu hai người yêu thương nhau."], ["B", "Công nhận nếu cuộc hôn nhân mới có con cái."], ["C", "Không thể công nhận liên kết mới là thành sự."], ["D", "Công nhận nếu cả hai người đều đồng ý."]], "answer": "C"}, {"n": 20, "q": "Điều nào sau đây diễn tả đúng nhất lập trường của Hội Thánh về ly dị và tái hôn sau khi ly dị?", "options": [["A", "Hội Thánh chấp nhận ly dị nhưng không khuyến khích tái hôn."], ["B", "Hội Thánh không chấp nhận ly dị và không công nhận hôn nhân mới là thành sự nếu hôn nhân đầu tiên đã thành sự."], ["C", "Hội Thánh hoàn toàn không quan tâm đến tình trạng hôn nhân sau khi ly dị."], ["D", "Hội Thánh cho phép tái hôn nếu cuộc hôn nhân mới hạnh phúc hơn."]], "answer": "B"}, {"n": 21, "q": "Đâu là những đặc tính của Hôn Nhân Công Giáo?", "options": [["A", "Tự do - tự nguyện đến với nhau, không bị ép buộc."], ["B", "Trọn vẹn - đơn hôn - một vợ một chồng."], ["C", "Trung tín - vĩnh hôn - bất khả phân ly."], ["D", "Trổ sinh hoa trái - sinh sản con cái."], ["E", "Cả A,B,C,D"]], "answer": "E"}, {"n": 22, "q": "Theo bài học, những người đã ly dị và tái hôn theo luật đời, bao lâu còn sống trong tình trạng đó, gặp hạn chế nào về đời sống bí tích?", "options": [["A", "Không được đọc Kinh Thánh và không được tham dự Thánh lễ."], ["B", "Không được rước lễ và cũng không thể đảm nhận một số trách nhiệm trong Hội Thánh."], ["C", "Không được cầu nguyện riêng tại gia đình."], ["D", "Không được tham gia bất cứ hoạt động bác ái nào của cộng đoàn."]], "answer": "B"}, {"n": 23, "q": "Hội Thánh mời gọi những người đã ly dị và tái hôn thực hiện điều gì để hướng tới sự giao hòa?", "options": [["A", "Chấm dứt mọi liên hệ với cộng đoàn Giáo hội."], ["B", "Hoán cải và cam kết sống tiết dục trọn vẹn để được giao hòa nhờ bí tích Thống Hối."], ["C", "Chỉ cần tham dự Thánh lễ vào các ngày lễ trọng."], ["D", "Xin chính quyền dân sự hủy bỏ cuộc hôn nhân trước."]], "answer": "B"}, {"n": 24, "q": "Khi gặp những gia đình đang rạn nứt hoặc đứng trước nguy cơ tan vỡ, thái độ của Hội Thánh được diễn tả đúng nhất là gì?", "options": [["A", "Chỉ quan tâm đến những gia đình đang sống hạnh phúc."], ["B", "Lên án và loại bỏ những gia đình đã gặp thất bại."], ["C", "Tìm cách hàn gắn, cứu chữa và giúp họ sống phù hợp với luật Chúa."], ["D", "Để mỗi gia đình tự giải quyết vì đây là vấn đề riêng tư."]], "answer": "C"}, {"n": 25, "q": "Đối với những tín hữu ly dị và tái hôn nhưng vẫn giữ đức tin và mong muốn giáo dục con cái theo tinh thần Công giáo, linh mục và cộng đoàn cần có thái độ nào?", "options": [["A", "Xa lánh để họ nhận ra lỗi lầm của mình."], ["B", "Ân cần đặc biệt, để họ không bị coi như đã tách lìa khỏi Hội Thánh."], ["C", "Không cho họ tham dự bất cứ sinh hoạt nào của cộng đoàn."], ["D", "Chỉ tiếp nhận họ khi họ hoàn tất mọi thủ tục dân sự."]], "answer": "B"}, {"n": 26, "q": "Theo bài học, những người đang sống trong hoàn cảnh ly dị và tái hôn vẫn có thể và phải tiếp tục thực hành những việc đạo đức nào?", "options": [["A", "Nghe Lời Chúa, tham dự Thánh lễ, cầu nguyện và thực thi bác ái."], ["B", "Chỉ cần cầu nguyện riêng và không cần tham dự cộng đoàn."], ["C", "Chỉ cần giáo dục con cái nhưng không cần tham dự Thánh lễ."], ["D", "Không được tham gia các sáng kiến phục vụ công lý và bác ái."]], "answer": "A"}, {"n": 27, "q": "Đâu là những đặc tính chính yếu nhất của Hôn Nhân Công Giáo??", "options": [["A", "Đơn hôn - một vợ một chồng."], ["B", "Vĩnh hôn - bất khả phân ly."], ["C", "Trổ sinh – sinh sản con cái."], ["D", "Chỉ A và B."]], "answer": "D"}, {"n": 28, "q": "Hôn nhân là gì ?", "options": [["A", "Hôn nhân là một giao ước giữa một người nam và một người nữ, có mục đích yêu thương nâng đỡ nhau trong tình vợ chồng, sinh sản và giáo dục con cái."], ["B", "Hôn nhân là một giao ước giữa hai người, có mục đích yêu thương nâng đỡ nhau trong tình vợ chồng, sinh sản và giáo dục con cái."], ["C", "Hôn nhân là một giao ước giữa một người nam và một người nữ, có mục đích yêu thương nâng đỡ nhau trong tình vợ chồng."], ["D", "Cả A, B và C"]], "answer": "A"}, {"n": 29, "q": "Hôn nhân Công giáo là gì ?", "options": [["A", "Hôn nhân Công giáo là Hôn nhân giữa hai người cùng theo Đạo Công giáo."], ["B", "Hôn nhân Công giáo là Hôn nhân được Chúa Giê-su nâng lên hàng Bí tích."], ["C", "Hôn nhân Công giáo là Hôn nhân giữa hai người cùng theo Đạo Công giáo, hoặc giữa một người theo Đạo Công giáo và một người không theo."], ["D", "Cả A, B và C"]], "answer": "B"}, {"n": 30, "q": "Bí tích Hôn nhân ban cho đôi bạn những ơn nào ?", "options": [["A", "Bí tích Hôn nhân thánh hóa tình yêu vợ chồng và ban nhiều ơn đặc biệt, giúp họ chu toàn nghĩa vụ đối với người bạn đời của mình."], ["B", "Bí tích Hôn nhân thánh hóa tình yêu vợ chồng và ban nhiều ơn đặc biệt, giúp họ chu toàn nghĩa vụ đối với người bạn đời của mình và đối với con cái."], ["C", "Bí tích Hôn nhân thánh hóa tình yêu vợ chồng và ban nhiều ơn đặc biệt, giúp họ chu toàn nghĩa vụ đối với người bạn đời của mình, đó là yêu thương và tôn trọng nhau suốt đời."], ["D", "Cả A, B và C"]], "answer": "B"}];
+
+      let current = 0;
+      let answers = Array(questions.length).fill(null);
+      let submitted = Array(questions.length).fill(false);
+      let studentData = {};
+      let startTime = null;
+      let endTime = null;
+
+      const qEl = document.getElementById('question');
+      const optsEl = document.getElementById('options');
+      const feedbackEl = document.getElementById('feedback');
+      const counterEl = document.getElementById('counter');
+      const progressEl = document.getElementById('progress');
+      const scoreLiveEl = document.getElementById('scoreLive');
+      const nextBtn = document.getElementById('next');
+      const prevBtn = document.getElementById('prev');
+
+      function startQuiz(event) {
+        event.preventDefault();
+        const name = document.getElementById('studentName').value.trim();
+        const className = document.getElementById('studentClass').value.trim();
+
+        if (!name) {
+          document.getElementById('nameWarning').textContent = 'Vui lòng nhập tên học sinh';
+          return;
+        }
+
+        studentData = {
+          name: name,
+          class: className || 'Không có',
+          startTime: new Date(),
+        };
+
+        startTime = new Date();
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('quiz-container').style.display = 'block';
+        document.getElementById('displayName').textContent = `${name}${className ? ' - ' + className : ''}`;
+        render();
+      }
+
+      function render() {
+        const q = questions[current];
+        counterEl.textContent = `Câu ${q.n} / ${questions.length}`;
+        progressEl.style.width = `${((current+1)/questions.length)*100}%`;
+        qEl.textContent = q.q;
+        optsEl.innerHTML = '';
+        feedbackEl.className = 'feedback';
+        feedbackEl.textContent = '';
+
+        q.options.forEach(([letter, text]) => {
+          const label = document.createElement('label');
+          label.className = 'option';
+          label.innerHTML = `<input type="radio" name="answer" value="${letter}"> <b>${letter}.</b> ${text}`;
+          const input = label.querySelector('input');
+          input.checked = answers[current] === letter;
+          input.disabled = submitted[current];
+          input.addEventListener('change', () => {
+            answers[current] = letter;
+          });
+          optsEl.appendChild(label);
+        });
+
+        if (submitted[current]) showFeedback();
+        prevBtn.disabled = current === 0;
+        nextBtn.textContent = current === questions.length - 1 ? '🏁 Xem kết quả' : 'Câu tiếp →';
+        updateScore();
+      }
+
+      function showFeedback() {
+        const q = questions[current];
+        document.querySelectorAll('.option').forEach(label => {
+          const input = label.querySelector('input');
+          if (input.value === q.answer) label.classList.add('correct');
+          if (input.checked && input.value !== q.answer) label.classList.add('wrong');
+        });
+        if (answers[current] === q.answer) {
+          feedbackEl.textContent = '✓ Chính xác!';
+          feedbackEl.className = 'feedback show good';
+        } else {
+          feedbackEl.textContent = `✗ Chưa đúng. Đáp án đúng là ${q.answer}.`;
+          feedbackEl.className = 'feedback show bad';
+        }
+      }
+
+      function nextQuestion() {
+        if (!submitted[current]) {
+          if (!answers[current]) {
+            feedbackEl.textContent = '⚠️ Vui lòng chọn một đáp án.';
+            feedbackEl.className = 'feedback show bad';
+            return;
+          }
+          submitted[current] = true;
+          showFeedback();
+          updateScore();
+          return;
+        }
+        if (current < questions.length - 1) {
+          current++;
+          render();
+        } else {
+          showResult();
+        }
+      }
+
+      function prevQuestion() {
+        if (current > 0) { current--; render(); }
+      }
+
+      function updateScore() {
+        const score = answers.reduce((sum,a,i) => sum + (submitted[i] && a === questions[i].answer ? 1 : 0), 0);
+        scoreLiveEl.textContent = `Điểm: ${score}`;
+      }
+
+      function showResult() {
+        endTime = new Date();
+        const correct = answers.filter((a,i) => a === questions[i].answer).length;
+        const wrong = questions.length - correct;
+        const percent = Math.round(correct/questions.length*100);
+        const timeTaken = Math.round((endTime - startTime) / 1000);
+
+        // Lưu vào localStorage
+        const resultRecord = {
+          id: Date.now(),
+          name: studentData.name,
+          class: studentData.class,
+          correct: correct,
+          wrong: wrong,
+          percent: percent,
+          score: `${correct}/${questions.length}`,
+          date: new Date().toLocaleString('vi-VN'),
+          time: timeTaken,
+          answers: answers
+        };
+
+        let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+        history.push(resultRecord);
+        localStorage.setItem('quizHistory', JSON.stringify(history));
+
+        document.getElementById('quiz').style.display='none';
+        document.getElementById('result').style.display='block';
+        document.getElementById('finalScore').textContent = `${correct} / ${questions.length}`;
+        document.getElementById('correctCount').textContent = correct;
+        document.getElementById('wrongCount').textContent = wrong;
+        document.getElementById('percent').textContent = percent + '%';
+        document.getElementById('resultName').textContent = studentData.name;
+        document.getElementById('resultClass').textContent = `Lớp: ${studentData.class}`;
+        document.getElementById('resultTime').textContent = `Thời gian: ${timeTaken} giây`;
+
+        document.getElementById('resultMsg').textContent =
+          percent >= 90 ? '🌟 Xuất sắc! Bạn nắm bài rất chắc.' :
+          percent >= 75 ? '👏 Rất tốt! Hãy xem lại vài câu còn sai.' :
+          percent >= 50 ? '👍 Khá tốt! Bạn nên ôn lại bài 18 thêm một lần.' :
+          '📚 Hãy đọc lại bài 18 và thử lại nhé!';
+
+        const review = document.getElementById('review');
+        review.innerHTML = '<h3>Ôn lại đáp án</h3>';
+        questions.forEach((q,i) => {
+          review.innerHTML += `<div class="review-item"><b>Câu ${q.n}:</b> ${answers[i]===q.answer?'✓':'✗'} <span class="small">Đáp án đúng: ${q.answer}</span></div>`;
+        });
+
+        // Gửi dữ liệu đến Google Sheets
+        sendToGoogleSheets(resultRecord);
+      }
+
+      function sendToGoogleSheets(data) {
+        const statusEl = document.getElementById('status');
+
+        if (GOOGLE_SCRIPT_URL === 'THAY_BẰNG_URL_CỦA_BẠN') {
+          statusEl.textContent = 'ℹ️ Chưa cấu hình Google Sheets. Dữ liệu đã lưu locally.';
+          statusEl.className = 'status show';
+          return;
+        }
+
+        statusEl.textContent = '⏳ Đang lưu vào Google Sheets...';
+        statusEl.className = 'status show loading';
+
+        fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify({
+            name: data.name,
+            class: data.class,
+            score: data.score,
+            percent: data.percent + '%',
+            correct: data.correct,
+            wrong: data.wrong,
+            date: data.date,
+            time: data.time + ' giây'
+          })
+        })
+        .then(() => {
+          statusEl.textContent = '✅ Kết quả đã lưu vào Google Sheets thành công!';
+          statusEl.className = 'status show success';
+        })
+        .catch(err => {
+          statusEl.textContent = '✓ Dữ liệu lưu locally. Google Sheets có thể không cấu hình.';
+          statusEl.className = 'status show success';
+        });
+      }
+
+      function restart() {
+        current = 0;
+        answers = Array(questions.length).fill(null);
+        submitted = Array(questions.length).fill(false);
+        studentData = {};
+        document.getElementById('result').style.display='none';
+        document.getElementById('quiz-container').style.display='none';
+        document.getElementById('login').style.display='flex';
+        document.getElementById('studentName').value = '';
+        document.getElementById('studentClass').value = '';
+      }
+
+      function exportResult() {
+        const history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+        if (history.length === 0) {
+          alert('Chưa có dữ liệu để xuất');
+          return;
+        }
+
+        let csv = 'STT,Tên học sinh,Lớp,Điểm,Đúng,Sai,Tỷ lệ,Ngày làm,Thời gian (giây)\n';
+        history.forEach((record, idx) => {
+          csv += `${idx+1},"${record.name}","${record.class}","${record.score}",${record.correct},${record.wrong},${record.percent}%,"${record.date}",${record.time}\n`;
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `BaiKiemTra_${new Date().getTime()}.csv`;
+        link.click();
+      }
+
+      render();
+    </script>
+  </body>
+</html>
