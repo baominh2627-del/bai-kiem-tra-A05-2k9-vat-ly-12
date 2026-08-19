@@ -8,3 +8,5 @@ quiz-app/
 ├── render.js # dựng DOM câu hỏi từ dữ liệu
 ├── grading.js # logic chấm điểm thuần (không đụng DOM lưu trữ)
 └── app.js # điều phối: validate Tên/Lớp, nộp bài, gọi grading + lưu Firebase
+
+hello
