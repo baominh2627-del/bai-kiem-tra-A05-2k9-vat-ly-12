@@ -198,8 +198,8 @@ const PART2_QUESTIONS = [
     ans: ["true", "false", "true", "false"],
   },
   {
-    stem: "Câu 4: Thí nghiệm xác định nhiệt nóng chảy của nước đá gồm: phễu chứa nước đá (1); dây điện trở (2); cốc (3); cân (4). Giai đoạn 1 chưa cấp điện, xác định được khối lượng chảy là $m_1$ trong $t_1$. Giai đoạn 2 cấp điện $P$ trong $t_2$, khối lượng chảy là $m_2$.",
-    image: "CÂU 4 PHẦN II",
+    stem: "Câu 4: ",
+    image: "img/anh-cau4-phanII.png",
     statements: [
       "Ở giai đoạn 1, nước đá nóng chảy do nhận nhiệt từ dây sợi đốt.",
       "Ở giai đoạn 2, nhiệt lượng mà nước đá nhận vào lớn hơn $Pt_2$.",
@@ -229,13 +229,13 @@ const PART3_QUESTIONS = [
     ans: "40",
   },
   {
-    stem: "Câu 5: Hai bình cách nhiệt A, B chứa cùng một lượng nước. Bình A: $80^{\\circ}C$, Bình B: $20^{\\circ}C$. Đổ một nửa nước ở bình B sang bình A. Sau khi cân bằng, đổ ngược nước ở bình A sang bình B lại sao cho lượng nước ở hai bình như ban đầu. Nhiệt độ cân bằng lúc sau ở bình B bằng bao nhiêu $^\\circ C$?",
-    image: "CÂU 5 PHẦN III",
+    stem: "Câu 5: ",
+    image: "img/anh-cau5-phan3.png",
     ans: "40",
   },
   {
-    stem: "Câu 6: Ba cốc chứa nước có nhiệt độ $10^{\\circ}C$; $30^{\\circ}C$; $45^{\\circ}C$. Nếu rót một nửa lượng nước trong cốc 2 vào cốc 1 thì nhiệt độ cân bằng là $15^{\\circ}C$. Nếu rót một nửa lượng nước cốc 2 vào cốc 3 thì nhiệt độ cân bằng là $35^{\\circ}C$. Nếu rót một nửa lượng nước cốc 1 và cốc 2 vào cốc 3 thì nhiệt độ cân bằng là bao nhiêu $^\\circ C$?",
-    image: "CÂU 6 PHẦN III",
+    stem: "Câu 6: ",
+    image: "img/anh-cau6-phan3.png",
     ans: "22.5",
   },
 ];
