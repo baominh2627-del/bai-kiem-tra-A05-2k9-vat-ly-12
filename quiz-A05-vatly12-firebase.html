@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài Kiểm tra Vật Lý 12 - A05</title>
+  </head>
+  <body>
+    <!-- Giao diện bài Quiz của bạn sẽ nằm ở đây -->
+    <h1>Bài Kiểm Tra Vật Lý 12 - Đề A05</h1>
+    <p>Hệ thống đang kết nối dữ liệu...</p>
+
+    <!-- 1. Thêm Firebase SDK -->
+    <!-- Sử dụng Firebase phiên bản 8 (compat) cho dễ tích hợp vào HTML tĩnh -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- 2. Cấu hình và Khởi tạo Firebase -->
+    <script>
+      // Cấu hình Firebase của bạn
+      const firebaseConfig = {
+        apiKey: "AIzaSyBKIwyzW6Yu9HRfslh1qIztql7CqSkFvKo",
+        authDomain: "luu-submitexam-a05-vl-12.firebaseapp.com",
+        databaseURL:
+          "https://luu-submitexam-a05-vl-12-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "luu-submitexam-a05-vl-12",
+        storageBucket: "luu-submitexam-a05-vl-12.firebasestorage.app",
+        messagingSenderId: "499179183740",
+        appId: "1:499179183740:web:c85a952b1713277c14b3f9",
+        measurementId: "G-32S8C8SYDY",
+      };
+
+      // Khởi tạo Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Khởi tạo Database (Realtime Database)
+      const database = firebase.database();
+
+      console.log("Đã kết nối Firebase thành công!");
+
+      // (Bạn có thể viết tiếp các logic JS xử lý nộp bài quiz ở đây)
+    </script>
+  </body>
+</html>
