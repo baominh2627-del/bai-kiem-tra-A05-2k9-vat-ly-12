@@ -1,0 +1,284 @@
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #eff6ff;
+  --accent: #ea580c;
+  --text: #1f2937;
+  --muted: #4b5563;
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --correct: #16a34a;
+  --wrong: #dc2626;
+  --border: #d1d5db;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 15px 80px;
+}
+
+/* Header */
+header {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+  text-align: center;
+  border-top: 5px solid var(--primary);
+}
+h1 {
+  margin: 0 0 10px;
+  color: var(--primary);
+  font-size: 24px;
+}
+.exam-info {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Student info card */
+.student-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+}
+.student-card .section-subtitle {
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.student-fields {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.field-group input {
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  font-family: inherit;
+}
+.field-group input:focus {
+  border-color: var(--primary);
+}
+.field-error {
+  font-size: 12px;
+  color: var(--wrong);
+  min-height: 16px;
+}
+
+@media (max-width: 600px) {
+  .student-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sections & Cards */
+.section-title {
+  font-size: 20px;
+  color: var(--primary);
+  font-weight: bold;
+  margin: 30px 0 15px;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 5px;
+}
+.card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 15px;
+  border: 1px solid var(--border);
+}
+.question-text {
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* Options Part 1 */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.option-label {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+  background: #fff;
+}
+.option-label:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+.option-label input {
+  margin-top: 4px;
+  margin-right: 10px;
+  transform: scale(1.1);
+}
+
+/* Part 2 (Đúng/Sai) */
+.tf-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.tf-table th,
+.tf-table td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: left;
+}
+.tf-table th {
+  background: var(--primary-light);
+  color: var(--primary);
+  text-align: center;
+}
+.tf-radio-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.tf-radio-group label {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Part 3 (Trả lời ngắn) */
+.short-answer-input {
+  width: 100%;
+  max-width: 200px;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+}
+.short-answer-input:focus {
+  border-color: var(--primary);
+}
+
+/* Image Placeholder */
+.image-placeholder {
+  background: #fdf2f8;
+  border: 2px dashed #db2777;
+  padding: 30px;
+  text-align: center;
+  border-radius: 8px;
+  margin: 15px 0;
+  color: #9d174d;
+  font-weight: bold;
+  cursor: pointer;
+}
+.image-placeholder small {
+  display: block;
+  font-weight: normal;
+  margin-top: 5px;
+  opacity: 0.8;
+}
+
+/* Result & Buttons */
+.btn-submit {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 40px auto 0;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(30, 58, 138, 0.3);
+  transition: 0.3s;
+}
+.btn-submit:hover {
+  background: #152c6b;
+  transform: translateY(-2px);
+}
+.btn-submit:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+#result-box {
+  display: none;
+  background: #ecfdf5;
+  border: 2px solid var(--correct);
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 30px;
+}
+.score-txt {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--correct);
+  margin: 10px 0;
+}
+.save-status {
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+.save-status.saving {
+  color: var(--muted);
+}
+.save-status.success {
+  color: var(--correct);
+}
+.save-status.error {
+  color: var(--wrong);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+  .tf-table th:nth-child(2),
+  .tf-table td:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+}
