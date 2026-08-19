@@ -167,7 +167,7 @@ const PART1_QUESTIONS = [
 const PART2_QUESTIONS = [
   {
     stem: "Câu 1: Cho hai vật A và B tiếp xúc với nhau, một lúc sau ta thấy nhiệt độ của vật A tăng lên, nhiệt độ vật B giảm xuống (bỏ qua sự trao đổi nhiệt với môi trường bên ngoài).",
-    image: "CÂU 1 PHẦN II",
+    // image: "CÂU 1 PHẦN II",
     statements: [
       "Nhiệt độ ban đầu của vật A cao hơn nhiệt độ ban đầu của vật B",
       "Nhiệt đã được truyền từ vật B sang vật A",
