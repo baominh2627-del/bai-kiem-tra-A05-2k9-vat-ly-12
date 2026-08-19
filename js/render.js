@@ -6,6 +6,31 @@
 
 const LETTERS = ["A", "B", "C", "D"];
 
+/**
+ * Trả về true nếu chuỗi trông giống một đường dẫn file ảnh thật
+ * (vd: "img/anh-cau3-phanII.png"), khác với nhãn chữ dùng cho placeholder
+ * (vd: "CÂU 3 PHẦN II").
+ */
+function isImagePath(value) {
+  return /\.(png|jpe?g|gif|webp|svg)$/i.test(value || "");
+}
+
+/**
+ * Dựng HTML cho phần ảnh của một câu hỏi: ảnh thật nếu item.image là
+ * đường dẫn file, hoặc khung placeholder nếu chỉ là nhãn chữ.
+ */
+function buildImageHtml(item) {
+  if (!item.image) return "";
+  if (isImagePath(item.image)) {
+    return `<img src="${item.image}" alt="Hình minh họa" style="width:100%; border-radius:8px; margin:15px 0;">`;
+  }
+  return `
+    <div class="image-placeholder">
+      🖼️ [CHỖ TRỐNG ĐỂ CHÈN ẢNH - ${item.image}]<br>
+      <small>(Hãy thay thẻ div này bằng: &lt;img src="link_anh.jpg" width="100%"&gt;)</small>
+    </div>`;
+}
+
 function renderPart1(container) {
   PART1_QUESTIONS.forEach((item, index) => {
     const card = document.createElement("div");
@@ -36,13 +61,7 @@ function renderPart2(container) {
     const card = document.createElement("div");
     card.className = "card";
 
-    const imageHtml = item.image
-      ? `
-        <div class="image-placeholder">
-          🖼️ [CHỖ TRỐNG ĐỂ CHÈN ẢNH - ${item.image}]<br>
-          <small>(Hãy thay thẻ div này bằng: &lt;img src="link_anh.jpg" width="100%"&gt;)</small>
-        </div>`
-      : "";
+    const imageHtml = buildImageHtml(item);
 
     const rows = item.statements
       .map((text, i) => {
@@ -79,13 +98,7 @@ function renderPart3(container) {
     const card = document.createElement("div");
     card.className = "card";
 
-    const imageHtml = item.image
-      ? `
-        <div class="image-placeholder">
-          🖼️ [CHỖ TRỐNG ĐỂ CHÈN ẢNH - ${item.image}]<br>
-          <small>(Hãy thay thẻ div này bằng: &lt;img src="link_anh.jpg" width="100%"&gt;)</small>
-        </div>`
-      : "";
+    const imageHtml = buildImageHtml(item);
 
     card.innerHTML = `
       <div class="question-text">${item.stem}</div>
