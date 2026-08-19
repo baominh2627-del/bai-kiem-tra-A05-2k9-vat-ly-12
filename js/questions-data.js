@@ -187,8 +187,8 @@ const PART2_QUESTIONS = [
     ans: ["false", "true", "true", "true"],
   },
   {
-    stem: "Câu 3: Một nhóm học sinh dự định sử dụng bình nhiệt lượng kế để xác định nhiệt nóng chảy riêng của nước đá theo công thức: $\\lambda=\\frac{P\\Delta t}{\\Delta m}$ (1). Trong đó $P$ công suất, $\\Delta m$ là khối lượng đá tan, $\\Delta t$ là thời gian. Nước đá ban đầu ở $0^{\\circ}C$.",
-    image: "CÂU 3 PHẦN II",
+    stem: "Câu 3: ",
+    image: "img/anh-cau3-phanII.png",
     statements: [
       "Khoảng thời gian cấp điện $\\Delta t$ càng lớn thì nhiệt lượng do dây sợi đốt tỏa ra càng lớn.",
       "Nhiệt lượng tổng cộng mà nước đá nhận vào trong thời gian cấp điện $\\Delta t$ là $P\\Delta t$.",
