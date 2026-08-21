@@ -50,6 +50,7 @@ function renderPart1(container) {
     card.innerHTML = `
       <div class="question-text">Câu ${index + 1}: ${item.q}</div>
       <div class="options-grid">${optionsHtml}</div>
+      <div class="answer-note" id="p1_q${index}_feedback"></div>
     `;
     container.appendChild(card);
   });
@@ -75,6 +76,7 @@ function renderPart2(container) {
                 <label><input type="radio" name="${name}" value="true"> Đ</label>
                 <label><input type="radio" name="${name}" value="false"> S</label>
               </div>
+              <div class="answer-note" id="${name}_feedback"></div>
             </td>
           </tr>`;
       })
@@ -104,6 +106,7 @@ function renderPart3(container) {
       <div class="question-text">${item.stem}</div>
       ${imageHtml}
       <input type="number" step="any" class="short-answer-input" name="p3_q${qNum}" placeholder="Nhập số...">
+      <div class="answer-note" id="p3_q${qNum}_feedback"></div>
     `;
     container.appendChild(card);
   });

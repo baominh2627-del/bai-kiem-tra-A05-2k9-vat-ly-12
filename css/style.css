@@ -151,6 +151,53 @@ h1 {
   transform: scale(1.1);
 }
 
+/* Review đúng/sai sau khi nộp bài */
+.answer-note {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.answer-note.correct {
+  color: var(--correct);
+}
+.answer-note.wrong {
+  color: var(--wrong);
+}
+
+.option-label.is-correct {
+  background: #ecfdf5;
+  border-color: var(--correct);
+}
+.option-label.is-wrong-selected {
+  background: #fef2f2;
+  border-color: var(--wrong);
+}
+
+.short-answer-input.is-correct-input {
+  border-color: var(--correct);
+  background: #ecfdf5;
+}
+.short-answer-input.is-wrong-input {
+  border-color: var(--wrong);
+  background: #fef2f2;
+}
+
+/* Input bị khoá sau khi nộp bài */
+#exam-form input:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.score-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
 /* Part 2 (Đúng/Sai) */
 .tf-table {
   width: 100%;

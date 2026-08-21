@@ -56,16 +56,25 @@ async function handleSubmit() {
 
   const result = gradeExam();
 
+  reviewExam(result);
   displayResult(result);
   await saveResultToFirebase(studentInfo, result);
 
-  submitBtn.disabled = false;
-  submitBtn.textContent = "NỘP BÀI";
+  submitBtn.textContent = "ĐÃ NỘP BÀI";
+  // Giữ nút ở trạng thái khoá: bài đã được chấm và khoá lại, không cần nộp thêm lần nữa.
 }
 
 function displayResult(result) {
   document.getElementById("final-score").innerText =
     result.total.toFixed(2) + " / 10";
+  const breakdown = document.getElementById("score-breakdown");
+  if (breakdown) {
+    breakdown.innerHTML = `
+      <span>Phần I: ${result.p1.score.toFixed(2)} đ</span>
+      <span>Phần II: ${result.p2.score.toFixed(2)} đ</span>
+      <span>Phần III: ${result.p3.score.toFixed(2)} đ</span>
+    `;
+  }
   document.getElementById("result-box").style.display = "block";
   window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 }
