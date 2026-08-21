@@ -99,16 +99,18 @@
       <div id="result-box">
         <h2>KẾT QUẢ BÀI LÀM</h2>
         <div class="score-txt" id="final-score">0.0 / 10</div>
+        <div class="score-breakdown" id="score-breakdown"></div>
         <p>Hệ thống tự động chấm theo barem BGD 2025.</p>
         <div class="save-status" id="save-status"></div>
       </div>
     </div>
 
-    <!-- Thứ tự load quan trọng: data -> firebase -> render -> grading -> app -->
+    <!-- Thứ tự load quan trọng: data -> firebase -> render -> grading -> review -> app -->
     <script src="js/questions-data.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/render.js"></script>
     <script src="js/grading.js"></script>
+    <script src="js/review.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
