@@ -206,7 +206,7 @@ const PART2_QUESTIONS = [
       "Nhiệt nóng chảy riêng của nước đá đo được (gián tiếp) là $\\frac{Pt_1t_2}{m_2t_1 - m_1t_2}$.",
       "Nếu $t_1 = t_2 = t$ thì nhiệt lượng mà nước đá nhận từ môi trường trong mỗi giai đoạn là $\\frac{Pm_1t}{m_2 - m_1}$.",
     ],
-    ans: ["false", "true", "true", "true"],
+    ans: ["false", "true", "true", "false"],
   },
 ];
 
