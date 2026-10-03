@@ -187,10 +187,13 @@ function displayResult(result) {
 
 async function saveResultToFirebase(studentInfo, result) {
   const statusEl = document.getElementById("save-status");
-  statusEl.textContent = "Đang lưu điểm...";
+  statusEl.textContent = "Đang đồng bộ điểm lên MTSedu...";
   statusEl.className = "save-status saving";
 
   try {
+    const session = getMTSeduSession();
+    const userId = session ? session.id : null;
+
     const record = {
       hoTen: studentInfo.name,
       lop: studentInfo.className,
@@ -199,16 +202,23 @@ async function saveResultToFirebase(studentInfo, result) {
       diemPhan3: round2(result.p3.score),
       tongDiem: round2(result.total),
       maDe: EXAM_META.code,
+      userId: userId || "unknown",
       thoiGianNop: new Date().toISOString(),
-      // Timestamp phía server để sắp xếp chính xác dù đồng hồ máy khách sai lệch
       serverTimestamp: firebase.database.ServerValue.TIMESTAMP,
     };
 
-    // Lưu vào node "ketQua/<maDe>" để dễ lọc theo mã đề
-    const newRef = database.ref(`ketQua/${EXAM_META.code}`).push();
-    await newRef.set(record);
+    const updates = {};
+    const newRef = database.ref(`testResults/${EXAM_META.code}`).push();
+    const newResultId = newRef.key;
 
-    statusEl.textContent = "✔ Đã lưu điểm thành công.";
+    updates[`testResults/${EXAM_META.code}/${newResultId}`] = record;
+    if (userId) {
+      updates[`users/${userId}/results/${newResultId}`] = record;
+    }
+
+    await database.ref().update(updates);
+
+    statusEl.textContent = "✔ Đã đồng bộ điểm thành công.";
     statusEl.className = "save-status success";
   } catch (err) {
     console.error("[app.js] Lỗi khi lưu điểm lên Firebase:", err);
