@@ -4,18 +4,74 @@
  * kiểm tra thông tin học sinh, và điều phối việc lưu điểm lên Firebase.
  */
 
+// Helper đọc session MTSedu
+function getMTSeduSession() {
+  try {
+    const raw = localStorage.getItem('userSession');
+    if (!raw) return null;
+    const user = JSON.parse(raw);
+    return (user && user.username) ? user : null;
+  } catch { return null; }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderExam();
+
+  // Kiểm tra đăng nhập MTSedu
+  const session = getMTSeduSession();
+  if (!session) {
+    // Hiện yêu cầu đăng nhập thay vì form nhập tay
+    const studentSection = document.getElementById("student-info-section");
+    if (studentSection) {
+      studentSection.innerHTML = `
+        <div style="text-align:center;padding:28px;background:#f9f9f9;border-radius:12px;">
+          <div style="font-size:44px;margin-bottom:12px;">🔒</div>
+          <h2 style="font-size:20px;font-weight:700;margin:0 0 8px;">Vui lòng đăng nhập</h2>
+          <p style="color:#666;font-size:14px;margin:0 0 20px;line-height:1.6;">
+            Bạn cần đăng nhập vào <strong>MTS Education</strong> để làm bài thi này.
+          </p>
+          <a href="https://mtsedu.vercel.app/#physics" style="display:inline-block;background:#1a3a6b;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;">
+            Đăng nhập tại MTS Education →
+          </a>
+          <p style="margin-top:14px;font-size:12px;color:#999;">Tài khoản được cung cấp bởi giáo viên</p>
+        </div>
+      `;
+    }
+  } else {
+    // Tự điền tên từ session vào input
+    const nameInput = document.getElementById("student-name");
+    const classInput = document.getElementById("student-class");
+    if (nameInput) {
+      nameInput.value = session.displayName || session.username;
+      nameInput.readOnly = true;
+      nameInput.style.background = '#f0f0f0';
+    }
+    if (classInput) {
+      classInput.value = session.username;
+      classInput.readOnly = true;
+      classInput.style.background = '#f0f0f0';
+    }
+  }
 
   const submitBtn = document.getElementById("submit-btn");
   submitBtn.addEventListener("click", handleSubmit);
 });
 
 /**
- * Kiểm tra & lấy thông tin học sinh. Hiển thị lỗi nếu thiếu.
+ * Kiểm tra & lấy thông tin học sinh từ session MTSedu hoặc form.
  * @returns {{name: string, className: string} | null}
  */
 function readStudentInfo() {
+  // Ưu tiên đọc từ session MTSedu
+  const session = getMTSeduSession();
+  if (session) {
+    return {
+      name: session.displayName || session.username,
+      className: session.username
+    };
+  }
+
+  // Fallback: đọc từ input nếu không có session
   const nameInput = document.getElementById("student-name");
   const classInput = document.getElementById("student-class");
   const nameError = document.getElementById("student-name-error");
