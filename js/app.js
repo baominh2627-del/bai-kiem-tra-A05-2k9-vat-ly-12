@@ -4,10 +4,59 @@
  * kiểm tra thông tin học sinh, và điều phối việc lưu điểm lên Firebase.
  */
 
-// Helper đọc session MTSedu
+// Helper tạo nút quay lại trang chủ
+function insertBackButton(returnUrl) {
+  const url = returnUrl || 'https://mtsedu.vercel.app';
+  const btn = document.createElement('div');
+  btn.innerHTML = `
+    <a href="${url}" style="
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 9999;
+      background: rgba(0,0,0,0.85);
+      color: white;
+      text-decoration: none;
+      padding: 9px 18px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    " onmouseover="this.style.background='rgba(0,0,0,1)'" onmouseout="this.style.background='rgba(0,0,0,0.85)'">
+      ← Trang chủ
+    </a>
+  `;
+  document.body.appendChild(btn);
+}
+
+// Helper đọc session MTSedu từ URL params hoặc localStorage
 function getMTSeduSession() {
+  // 1. Đọc từ URL params (khi mới click từ MTSedu)
+  const params = new URLSearchParams(window.location.search);
+  const urlUsername = params.get('mtsedu_user');
+  const urlName = params.get('mtsedu_name');
+  const urlId = params.get('mtsedu_id');
+  const returnUrl = params.get('mtsedu_return');
+
+  if (urlUsername) {
+    const session = {
+      username: urlUsername,
+      displayName: urlName || urlUsername,
+      id: urlId || ('user_' + urlUsername),
+      returnUrl: returnUrl || 'https://mtsedu.vercel.app'
+    };
+    try { localStorage.setItem('mtsedu_session', JSON.stringify(session)); } catch {}
+    return session;
+  }
+
+  // 2. Đọc từ localStorage
   try {
-    const raw = localStorage.getItem('userSession');
+    const raw = localStorage.getItem('mtsedu_session');
     if (!raw) return null;
     const user = JSON.parse(raw);
     return (user && user.username) ? user : null;
@@ -38,7 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
   } else {
-    // Tự điền tên từ session vào input
+    // Tự điền tên từ session vào input và chèn nút quay lại
+    insertBackButton(session.returnUrl);
     const nameInput = document.getElementById("student-name");
     const classInput = document.getElementById("student-class");
     if (nameInput) {
