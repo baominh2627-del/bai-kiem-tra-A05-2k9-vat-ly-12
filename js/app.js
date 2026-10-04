@@ -87,20 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
   } else {
-    // Tự điền tên từ session vào input và chèn nút quay lại
+    // Chèn nút quay lại
     insertBackButton(session.returnUrl);
-    const nameInput = document.getElementById("student-name");
-    const classInput = document.getElementById("student-class");
-    if (nameInput) {
-      nameInput.value = session.displayName || session.username;
-      nameInput.readOnly = true;
-      nameInput.style.background = '#f0f0f0';
-    }
-    if (classInput) {
-      classInput.value = session.username;
-      classInput.readOnly = true;
-      classInput.style.background = '#f0f0f0';
-    }
   }
 
   const submitBtn = document.getElementById("submit-btn");
@@ -121,27 +109,10 @@ function readStudentInfo() {
     };
   }
 
-  // Fallback: đọc từ input nếu không có session
-  const nameInput = document.getElementById("student-name");
-  const classInput = document.getElementById("student-class");
-  const nameError = document.getElementById("student-name-error");
-  const classError = document.getElementById("student-class-error");
-
-  const name = nameInput.value.trim();
-  const className = classInput.value.trim();
-
-  let valid = true;
-  nameError.textContent = "";
-  classError.textContent = "";
-
-  if (!name) {
-    nameError.textContent = "Vui lòng nhập họ tên.";
-    valid = false;
-  }
-  if (!className) {
-    classError.textContent = "Vui lòng nhập lớp.";
-    valid = false;
-  }
+  // Fallback: không có session → dùng giá trị mặc định
+  const name = "Thí sinh";
+  const className = "—";
+  const valid = true;
 
   return valid ? { name, className } : null;
 }
@@ -231,3 +202,10 @@ async function saveResultToFirebase(studentInfo, result) {
 function round2(value) {
   return Math.round(value * 100) / 100;
 }
+
+// Hàm gọi khi người dùng bấm nút Bắt đầu thi
+function startExam() {
+  document.getElementById('screen-start').style.display = 'none';
+  document.getElementById('exam-form').style.display = 'block';
+}
+
